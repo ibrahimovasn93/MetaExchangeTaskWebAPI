@@ -3,6 +3,7 @@ using metaExchangeTask;
 using System;
 using System.Collections.Generic;
 using static metaExchangeTask.Program;
+using Microsoft.Extensions.Configuration;
 
 namespace MetaExchangeTaskWebAPI.Controllers
 {
@@ -11,11 +12,13 @@ namespace MetaExchangeTaskWebAPI.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IMetaExchange _metaExchangeAppLibrary;
-
-        public OrderController(IMetaExchange metaExchangeAppLibrary)
+        private readonly IConfiguration _configuration;
+        public OrderController(IMetaExchange metaExchangeAppLibrary, IConfiguration configuration)
         {
             _metaExchangeAppLibrary = metaExchangeAppLibrary;
+            _configuration = configuration;
         }
+
 
         [HttpPost("execute-order")]
         public IActionResult ExecuteOrder([FromBody] OrderRequest orderRequest)
@@ -33,13 +36,17 @@ namespace MetaExchangeTaskWebAPI.Controllers
 
             try
             {
-                string filePath = @"C:\Users\Solmaz Ibrahimova\Desktop\test2.txt";
+                //string filePath = @".\Orderbooks\test2.txt";
+                string filePath =_configuration.GetValue<string>("FilePaths:Order_Books_Data");
                 List<OrderBook> orderBooks = _metaExchangeAppLibrary.DeserializeJsonData(filePath);
+
+                decimal btcBalance = _configuration.GetValue<decimal>("Balances:BTCbalance");
+                decimal euroBalance = _configuration.GetValue<decimal>("Balances:EURObalance");
 
                 Balance balances = new Balance
                 {
-                    BTCbalance = 1000,
-                    EURObalance = 1000000000
+                    BTCbalance = btcBalance,
+                    EURObalance = euroBalance
                 };
 
                 // Adjust arguments for GetMatchedOrders based on your library's requirements
