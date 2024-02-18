@@ -2,6 +2,7 @@
 using metaExchangeTask;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using static metaExchangeTask.Program;
 
 namespace MetaExchangeTaskWebAPI.Controllers
