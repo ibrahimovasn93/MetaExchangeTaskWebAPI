@@ -16,8 +16,8 @@ To set up and run the MetaExchangeTaskWebAPI project, please follow the below st
 
 4. Build the solution to restore dependencies and compile the project.
 
-5. Update the file paths and configurations as per your environment and requirements:
-   - Ensure that the file paths for JSON data and other resources are correctly configured.
+5. Update the order books and configurations as per your environment and requirements:
+   - Update Orderbook/order_book_data.txt file with your orderbooks and define your balances under appsettings.json.
    - Adjust any environment-specific configurations, such as HTTPS settings and Swagger endpoints.
 
 6. Run the application:
